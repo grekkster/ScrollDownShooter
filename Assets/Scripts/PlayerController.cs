@@ -17,13 +17,15 @@ public class Boundaries
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb2D;
+    //private Transform transform;
     private Vector2 movement;
-    public const float speed = 10f;
+    public const float speed = 1f;
     public Boundaries boundaries;
 
     private void Awake()
     {
-        rb2D = GetComponent<Rigidbody2D>();
+        //rb2D = GetComponent<Rigidbody2D>();
+        //transform = GetComponent<Transform>();
     }
 
     // Use this for initialization
@@ -45,16 +47,22 @@ public class PlayerController : MonoBehaviour {
         movement.x = moveHorizontal;
         movement.y = moveVertical;
 
-        rb2D.velocity = movement * speed;
+        //rb2D.velocity = movement * speed;
 
         // Optimalizace?
         //Constraint to game screen
-        rb2D.position = new Vector2
-        (
-            Mathf.Clamp(rb2D.position.x, boundaries.xMin, boundaries.xMax),
-            Mathf.Clamp(rb2D.position.y, boundaries.yMin, boundaries.yMax)
-        );
+        //rb2D.position = new Vector2
+        //(
+        //    Mathf.Clamp(rb2D.position.x, boundaries.xMin, boundaries.xMax),
+        //    Mathf.Clamp(rb2D.position.y, boundaries.yMin, boundaries.yMax)
+        //);
 
         //rb2D.MovePosition(new Vector2(Mathf.Clamp(rb2D.position.x, boundaries.xMin, boundaries.xMax), Mathf.Clamp(rb2D.position.y, boundaries.yMin, boundaries.yMax)));
+
+        transform.position = new Vector2
+        (
+            Mathf.Clamp(transform.position.x + movement.x*speed, boundaries.xMin, boundaries.xMax),
+            Mathf.Clamp(transform.position.y + movement.y*speed, boundaries.yMin, boundaries.yMax)
+        );
     }
 }
