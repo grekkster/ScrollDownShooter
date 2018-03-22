@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
     // - only for Update
     // - FixedUpdate should be called 50x/s
-	void FixedUpdate () {
+    // 3d/2d tutorial - používá FixedUpdate, jenže tady se sice používá physics, ale ne force, jen movemen. Update je plynulejší pohyb?
+	void Update () {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 

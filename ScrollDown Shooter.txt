@@ -218,6 +218,38 @@ Unity - .SetActive - aktivace a deaktivace objektů - jako zaškrtávátko v uni
 
 Parallaxing - background, foreground
 
+Střely
+------
+GameObject - Bolt
+child quad - materiál textura, albedo shader (mobile pro lepší performance) - glow
+rididbody, nepoužívat gravitaci
+collider bude ve scéně viditelnej jen když je zaškrtnuto convex
+- 2d capsule
+skript movement - rychlost, pohyb na start
+uložit bolt gameobject jako prefab - drag do Assets\prefabs
+vytvořit na input střely, pooling, deaktivace
+střelba - v PlayerController skriptu
+
+Movement code do update vs fyzika do fixedUpdate?
+Update
+- volanej každej frame
+- update interval se může lišit
+- movement of nonphysics! object
+- simple timers
+- receiving input
+FixedUpdate
+- every physics step
+- konzistentní interval
+- pravidelný updaty jako úprava fyziky! - rigidbody! objekty
+- FixedUpdate should be used instead of Update when dealing with Rigidbody. For example when adding a force 
+to a rigidbody, you have to apply the force every fixed frame inside FixedUpdate instead of every frame 
+inside Update.
+- Bottom line: using FixedUpdate for anything else than physics is in the vast majority of cases simply misguided.
+
+Základní chyby:
+https://blogs.technet.microsoft.com/uktechnet/2015/07/22/5-common-mistakes-made-in-unity/
+- jednotky, velikosti
+
 TODO - particle pohon + když se pohybuju přidat gas
 TODO - particle zbraň
 TODO - další vrstva? planety/asteroidy/...
@@ -226,3 +258,4 @@ TODO telefon - ovládání gyroskopem, střelba dotykem?
 TODO particle hvězdy, asteroidy
 TODO optimalizace - textury, vyhledávání, reference ve smyčkách - přesun z Update, OBJECT POOLING, 
 kešování referencí, transform, animator, find -> v awake/start
+TODO muzika - smyčka wena - audacity?
