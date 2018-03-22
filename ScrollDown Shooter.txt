@@ -1,0 +1,228 @@
+1) Create 2D project.
+2) Nastavit layout na 2D scroll down shooter.
+3) Nastavit build target.
+4) Nastavit portrait rozlišení - Edit - Player.
+5) Nastavit gravitaci. Edit - Physics/Physics2D?
+- physics 2D + vypnout?
+6) Import assetů?
+7) Save hlavní scény do _Scenes.
+8) Player/GameObject - buď vytvořit, nebo dropnout do Hierarchy.
+- GameObject + sprite (pro 2D, 3D mesh + mats + texture)
+- Physics2D
++ rigidbody + use gravity? lepší na celou scénu než 
+na každej objekt
++ fixed angle (Constrains Freeze Rotation)? + gravitace vypnout.
++ collider(jednoduchý těleso nebo když lepší, tak simplified mesh) - istrigger? - spustí akci, convex
+9) Efekty - přidat do hierarchie pod objekt kterému náleží.
+10) Nastavení kamery - pozice, směr, perspektiva/ortograficky
++ nastavení defaultní pozice kamery vůči playeru, tak aby player zůstal na originu
++ clear flag - solid color? prázdný pozadí - nově ne u kamery ale Window -> lightning -> Scene tab -> Remove 
+11) Light?
+- Directional Light
+- layers aby se světla neovlivňovaly
+Skybox - Skybox = none
+12) Animator komponent + animation window + clip
+- animace - idle, run, ...
+13) Background
+https://unity3d.com/learn/tutorials/topics/2d-game-creation/scrolling-repeating-backgrounds?playlist=17093
+- textura
+- vrstvy - Sorting layers
+- rigidbody musí bejt?
+- scrolling script
+14) Movement
+- public prop speed prosdílená do unity?
+- colize s hranou?
+
+
+GameView/GameArea ??? - dohledat v helpu
+GameControl class?
+https://unity3d.com/learn/tutorials/topics/2d-game-creation/scrolling-repeating-backgrounds?playlist=17093
+https://unity3d.com/learn/tutorials/projects/space-shooter-tutorial/extending-space-shooter-enemies-more-hazards?playlist=17147
+
+Scenes
+GameObject
+Prefabs
+Packages
+Různý souřadný systémy: World space X Local space -> Vector3.Forward?/transform
+- new Vector3(x, y, z) => world
+- transform.TransformDirection(Vector3.Forward(=0,0,1) * 10) => transform = souřadnej systém objektu
+Physics - RigidBody, Collider
+Particles
+Animator
+Sorting Layers + Order in Layer
+Render vs Sprite
+GameObject - hierarchie - zaštiťuje potomky, visible pomocí buttonu v property
+Animace - série obrázků označit, drag drop - automaticky má Animator
+RigidBody - působí fyzika
+Collider - nemusí působit fyzika ale jen kolize -> podlaha!
+- character -> rigidbody + colider, podlaha jen collider - boxCollider
+- Metody různých komponent - např. OnCollisionEnter2D?
+GetComponent - přístup ke komponentám!
+Skládání obrázků - snapping
+Tvorba 2D assetů - vektorová grafika, kostra, 2D animace
+- základní náčtr - trace layer
+- inkscape, gimp, PS, illustrator
+2D charakter
+- sketch
+- Illustrrator, Inkscape, Photoshop
+- Tablet (Surface pro, Intuous, ...)
+- template layer
+- přidat sketch jako base layer
+- další vrstvy pro komponenty postavy, kreslit komponenty na vrstvy jednu po druhý
+3D modeling
+- Maya, Blender, 3DS Max
+- udělat základní tvary, extrude, tweak, repeat
+- unity - tool ProBuilder
+- export/přidat přímo do unity - obj, FBX!
+- základní tvary - zvlášť co nejvíc - ruce, oči, torz..
+- základní textury
+- přidávat detaily
+- 30 000 max trojuhelníků ve scéně aby to zvládaly mobily
+- 2000 max na postavu
+- optimalizace - topo/tobogan? high res model -> různé stupně nižšího rozlišení + bake z high res modelu, podle vzdálenosti swapovat modely
+
+3D
+rigidbody
+collider
+
+terrain asset
++ textura
+
+input, movement, colision
+
+Tag
+movement - axis update
+collision - OnCollisionEnter
+gameObject.Tag = enemy -> destroy enemy, increment sccore
+GameObject UI Text
+[SerializeField] - zpřístupnění private proměnné v editoru
+
+FixedUpdate - dobrý pro fyziku - volaný 50/s
+
+GameController - 1st person, 3rd person
+- update UI
+- nevizuální objekt
+- řídící skript
+- koordinace
+- spawning, update UI, ...
+OnCollisionEnter x OnTriggerEnter - s fyzikou x bez
+enter, stay, exit
+
+Optimalizace
+baking lights
++ rychlost
+- místo
+- statický/dynamický objekty s light probe
+- označit statický objekty
+- po baku vypnout světla !
+- před vypnout ambient, po zase zapnout
+- jen unity PRO
+- dynamic - lightprobehelper skript
+
+draw calls
+- redukce
+- pro mobil 30 starší mobil, 50, špička 90
+- atlas - složení více textur různých objektů do jedný texturový mapy redukuje draw calls
+-- do atlasu všecko co jde
+-- sprite packer - podobný skupiny, barvy dohromady, packing tag
+- static batching - verze PRO
+- dynamic batching - zapnuto automaticky?
+- UNITY - STATS při spuštěné hře
+- nastavení static objektů, off pro dynamický
+- více materiálů = více draw calls
+-- kombinovat materiály, např transparentnost - ve stejný textuře na různý objekty
+-- znovupoužití textur, částí textur, UVs?
+-- opakovatelný textury
+-- stejnej model se stejnou texturou - znovupoužití, rotace, velikost,...
+-- co nejméně materiálů, co nejvíce znovupoužití
+
+komprese textur, audio - pro různý platformy, mobil menší, než PC
+- audio - loopy, max 30s pro mobil?
+
+optimalizace kódování
+- chache reference
+- gameObject.find - skenuje vše - pomalý
+- cmoponent reference špatný - nakešovat dopředu dej komponent udělej opakování -> kešovat
+-- kešovat přes Editor reference?
+- vyhnout se vyhledávání ve smyčkách!
+-- nepoužívat, reference vyhledávání ve smyčkách - Update loop -> lepší při inicializaci pokud to jde
+- object pooling
+-- instanciace drahá, destroy, garbage kolekce drahá -> znovupoužití objektu
+-- prealokace objektů
+- co nejmíň objektů, limitování počtu, neinstanciovat pořád ve smyčce
+-- github recyklerkit - trashman
+-- instanciace pro reference, kešování v awake/start metodě
+--- animator, player,...
+--- kaš transform na startu, do proměnný, ne native call v update
+SUMA: object pooling, reference nakešovat při inicializaci (awake, start), nevyhledávat ve
+smyčkách(update), hledání je pomalý, lepší konkrétnější, ne přes celou sadu
+komponent(findObjectWithTag lepší než Find)
+
+Terrain - hodně drawcalls
+-- experimentovat s nastavením v unity
+-- terén spec. pro mobily
+-- tools - T4M (mobily), topogun
+- Skyboxes
+-- KGFSkyBox redukuje drawcalls - 1 místo 6
+
+Geometrie
+- redukovat počet trojuhelníků
+- high res modely -> low res
+- !nástroje decimator, retopology - Cruncher, Mixamos decimator, blender decimate, simplypolygon.com
+- separátní low poly model pro mobil - topogun
+- !LOD - low poly model, pokud je objekt daleko (v PRO verzi, ale může být uděláno manuálně)
+- retopologize v modeling sw
+- Topogun vs free retopology program
+- terén
+-- terrainobjexporter + topogun
+- uv unwrapping
+
+ALM application life management
+- project management
+- source control
+- development workflow
+
+- TFS - VS online, team, pm, source control, builds, tests
+
+PM
+- high level goals
+- features
+- product backlog items
+- tasks
+- timelines
+- workforce transparency
+- resource usage, allocation
+- plánování vs realita
+
+- standup meeting, práce dohromady, finiš task, uzavření
+- sprint - 2/3 týdny
+- tasks, TODO, in progress, done
+
+- research + read - první task
+- vyzkoušet VS Online!
+
+Unity source control
+Editor settings - version control - visible meta files
+Ignore
+- root - auto gen stuff
+- Library - local cache of assets
+- Temp
+Checkin
+- assets - scenes, art, audio, code
+- project settings: input, physics
+- WORKFLOW - pull, pracuj, pull znovu, merge konflikt, test, push
+- meta file split!!?
+TODO - unity gitignore file?
+
+Unity - .SetActive - aktivace a deaktivace objektů - jako zaškrtávátko v unity
+
+Parallaxing - background, foreground
+
+TODO - particle pohon + když se pohybuju přidat gas
+TODO - particle zbraň
+TODO - další vrstva? planety/asteroidy/...
+TODO vesmír -> Prefab
+TODO telefon - ovládání gyroskopem, střelba dotykem?
+TODO particle hvězdy, asteroidy
+TODO optimalizace - textury, vyhledávání, reference ve smyčkách - přesun z Update, OBJECT POOLING, 
+kešování referencí, transform, animator, find -> v awake/start
