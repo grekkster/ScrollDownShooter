@@ -229,6 +229,7 @@ skript movement - rychlost, pohyb na start
 uložit bolt gameobject jako prefab - drag do Assets\prefabs
 vytvořit na input střely, pooling, deaktivace
 střelba - v PlayerController skriptu
+- collider - isTrigger
 
 Movement code do update vs fyzika do fixedUpdate?
 Update
@@ -250,6 +251,9 @@ Základní chyby:
 https://blogs.technet.microsoft.com/uktechnet/2015/07/22/5-common-mistakes-made-in-unity/
 - jednotky, velikosti
 
+GameController - SINGLETON! - v samotný třídě static instacne - pokud existuje použít, pokud tak zničit novou
+Dokumentace Ctrl + '
+
 TODO - particle pohon + když se pohybuju přidat gas
 TODO - particle zbraň
 TODO - další vrstva? planety/asteroidy/...
@@ -259,3 +263,14 @@ TODO particle hvězdy, asteroidy
 TODO optimalizace - textury, vyhledávání, reference ve smyčkách - přesun z Update, OBJECT POOLING, 
 kešování referencí, transform, animator, find -> v awake/start
 TODO muzika - smyčka wena - audacity?
+TODO player - použít rigidbody a pohyb přes fyziku (může bejt zajímavjší - sice bez gravitace ale mohla by 
+fungovat akcelerace, reálnější pohyb), nebo bez?
+- pokud už budu používat fyziku a rigidbody, neměl bych asi měnit pozici pomocí transform.position, ale spíš 
+addforce
+https://unity3d.com/learn/tutorials/topics/2d-game-creation/rigidbody-2d?playlist=17093
+https://answers.unity.com/questions/985750/project-space-shooter-problem.html
+TODO projectile - pokud má bejt obecnej, musím přiřazovat programově nejen texturu, dmg, rychlost atd. ale 
+taky collider - různý tvary!
+TODO upravit pohyb - player, projektil - zvláštní výpočty, player obří rychlost
+- použít Time.deltaTime*speed
+TODO projektil texture -> shader = materiál

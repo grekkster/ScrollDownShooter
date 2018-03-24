@@ -218,6 +218,7 @@ MonoBehaviour:
     xMax: 2.5
     yMin: -0.2
     yMax: 8
+  projectile: {fileID: 1495168886162768, guid: 007e4294147db9b49848590cec466c6e, type: 2}
 --- !u!1 &715907635
 GameObject:
   m_ObjectHideFlags: 0

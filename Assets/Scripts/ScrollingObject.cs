@@ -9,6 +9,10 @@ public class ScrollingObject : MonoBehaviour {
     // TODO tileSizeY private + ziskat primo z textury!
     private float tileSizeY;
 
+    //TODO varianty:
+    //https://unity3d.com/learn/tutorials/topics/2d-game-creation/2d-scrolling-backgrounds?playlist=17093
+    //https://unity3d.com/learn/tutorials/topics/2d-game-creation/scrolling-repeating-backgrounds?playlist=17093
+
     // Use this for initialization
     void Start () {
         startPosition = transform.position;

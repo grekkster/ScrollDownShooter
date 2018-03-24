@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +20,15 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb2D;
     //private Transform transform;
     private Vector2 movement;
-    public const float speed = 1f;
+    public const float speed = 0.05f;
     public Boundaries boundaries;
+
+    //TODO shotSpawn - player transform + něco před čumákem
+    public GameObject projectile;
+    private GameObject newProjectile;
+    private float myTime = 0.0f;
+    private float nextFire = 0.5f;
+    private float fireDelta = 0.2f;
 
     private void Awake()
     {
@@ -64,5 +72,26 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(transform.position.x + movement.x*speed, boundaries.xMin, boundaries.xMax),
             Mathf.Clamp(transform.position.y + movement.y*speed, boundaries.yMin, boundaries.yMax)
         );
+
+        // shooting
+        FireProjectile();
+    }
+
+    private void FireProjectile()
+    {
+        myTime = myTime + Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && myTime > nextFire)
+        {
+            nextFire = myTime + fireDelta;
+            newProjectile = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
+            //newProjectile = Instantiate(projectile, transform.position, transform.rotation);
+            //Instantiate(projectile, transform.position, transform.rotation);
+
+            // create code here that animates the newProjectile
+
+            nextFire = nextFire - myTime;
+            myTime = 0.0f;
+        }
     }
 }
